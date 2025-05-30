@@ -1,4 +1,4 @@
-# equity-research-agent
+# Equity Research LLM Agent
 
 A multi-agent Python system for comprehensive stock analysis and equity research reporting.
 
