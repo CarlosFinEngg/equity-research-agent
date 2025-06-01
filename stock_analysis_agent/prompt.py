@@ -35,11 +35,11 @@ Step-by-Step Process:
   * Input:
 
     * provided_ticker (string, mandatory)
-    * timeframe (string, optional, default “1Y”)
+
   * Action:
-    Call technical_agent with provided_ticker and timeframe.
+    Call technical_agent with provided_ticker.
   * Expected Output:
-    technical_agent MUST return a detailed plain-text technical report (Indicators, Patterns Detected, Key Insights).
+    technical_agent MUST return a detailed technical report (Indicators, Patterns Detected, Key Insights).
   * After receiving, display: “Received technical analysis:” and include the entire technical_output without trimming.
 
 * Gather Fund-Flow Analysis (Subagent: fund_agent)

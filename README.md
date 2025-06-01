@@ -52,12 +52,13 @@ uv pip install .
 
 ## Usage
 
-Run the agent in ADK WEB:
+Configure models and environment variables in `stock_analysis_agent/config.py` and `.env` as needed.
+
+Then run the agent in ADK WEB:
 ```bash
 adk web
 ```
 
-Configure models and environment variables in `stock_analysis_agent/config.py` and `.env` as needed.
 
 ## License
 MIT

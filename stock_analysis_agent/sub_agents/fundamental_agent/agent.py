@@ -16,12 +16,12 @@ fundamental_agent = LlmAgent(
                     command="uv",
                     args=[
                         "--directory",
-                        "/home/tic19/PyProjects/efund-agent/yahoo-finance-mcp",
+                        "/home/tic19/PyProjects/equity-research-agent/yahoo-finance-mcp",
                         "run",
                         "server.py"
                     ]
             ),
             tool_filter=['get_financial_statement']
         ),
-    ],
+    ]
 )

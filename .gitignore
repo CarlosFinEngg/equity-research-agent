@@ -25,7 +25,9 @@ wheels/
 
 # Project-specific
 yahoo-finance-mcp/
+china-stock-mcp-server/
 todo.txt
+test.ipynb
 stock_analysis_agent/prompt_testing.py
 stock_analysis_agent/sub_agents/fundamental_agent/agent_gr.py
 stock_analysis_agent/sub_agents/fundamental_agent/prompt_gr.py
