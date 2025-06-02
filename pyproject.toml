@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "akshare>=1.16.96",
     "google-adk>=1.1.0",
     "ipykernel>=6.29.5",
     "mcp-query-table>=0.3.8",

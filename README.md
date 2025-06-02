@@ -33,6 +33,7 @@ stock_analysis_agent/
 ```
 
 ## Requirements
+- Developed and tested on Linux. Performance on Windows is not garanteed.
 - Python 3.11+
 - Dependencies as listed in pyproject.toml, including:
   - [google-adk](https://pypi.org/project/google-adk/)
@@ -40,7 +41,7 @@ stock_analysis_agent/
   - [mcp](https://pypi.org/project/mcp/)
 
 Please note: For the setup of MCP servers, please refer to the following:
-- [yahoo-finance-mcp](https://github.com/hwangwoohyun-nav/yahoo-finance-mcp)
+
 
 MCPs are supposed to be cloned to this project's root folder.
 

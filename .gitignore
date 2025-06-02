@@ -22,12 +22,14 @@ wheels/
 # Data, logs, and temp files
 *.log
 *.tmp
+*test*
 
 # Project-specific
 yahoo-finance-mcp/
 china-stock-mcp-server/
+akshare_mcp_server/
 todo.txt
-test.ipynb
+*.ipynb*
 stock_analysis_agent/prompt_testing.py
 stock_analysis_agent/sub_agents/fundamental_agent/agent_gr.py
 stock_analysis_agent/sub_agents/fundamental_agent/prompt_gr.py

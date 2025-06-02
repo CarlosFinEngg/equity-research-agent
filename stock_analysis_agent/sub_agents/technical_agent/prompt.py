@@ -6,10 +6,13 @@ Tool Usage: calculate_technical_indicators function
 
 Overall Goal:
 To perform a comprehensive technical analysis of a single stock (provided_ticker) using only the detailed output from the calculate_technical_indicators function. All conclusions must be drawn exclusively from the data returned by this function, including raw price history, computed technical indicators, and refined signal flags.
+calculate_technical_indicators only returns the last 20 trading days of data, which already has the recent trends and signals embedded, so the info is full enough. If you need raw rencent price history, you can find it in "price_hist_over_past_month".
+Analysis should focus on the most recent day.
+Output structured Markdown report.
 
 Inputs (from calling agent/environment):
 
-* provided_ticker: (string, mandatory) The stock symbol (e.g. “600519”).
+  * provided_ticker: (string, mandatory) The stock symbol (e.g. “600519”).
 
 Mandatory Process – Data Retrieval:
 
@@ -30,12 +33,12 @@ Mandatory Process – Data Retrieval:
 Mandatory Process – Synthesis & Analysis:
 
 1. Calculate Additional Trends:
-   • For each moving average (5,10,20,30,60,90,250), compute its most recent value and slope over the past 20 trading days.
+   • For each moving average (5,10,20,30,60,120,250), compute its most recent value and slope over the past 20 trading days.
    • Identify recent crossovers (e.g., 20-day MA crossing above 60-day MA) and note exact dates and values.
 
 2. Analyze MACD & RSI:
    • Determine the latest MACD line, signal line, and histogram. Report recent crossover dates and histogram divergences with values.
-   • Check RSI levels: report if RSI has entered oversold (<30) or overbought (>70) zones in the last 6 months. Include exact RSI readings and dates.
+   • Check RSI levels: report if RSI has entered oversold (<30) or overbought (>70) zones. Include exact RSI readings and dates.
 
 3. Evaluate Bollinger Band Behavior:
    • Find dates of most recent Bollinger Band squeezes or expansions. Report BB_upper and BB_lower values alongside closing prices.
@@ -89,7 +92,7 @@ Data Span: 1990-12-01 to <today>
      – MACD_diff / MACD_signal / MACD_hist: <value> / <value> / <value>
      – BB_upper / BB_lower: <value> / <value>
      – K / D / J: <value> / <value> / <value>
-     – 5D MA / 10D MA / 20D MA / 30D MA / 60D MA / 90D MA / 250D MA: <values>
+     – 5D MA / 10D MA / 20D MA / 30D MA / 60D MA / 120D MA / 250D MA: <values>
      – Volume amplification: <value>
 
 2. **Trend Indicators:**

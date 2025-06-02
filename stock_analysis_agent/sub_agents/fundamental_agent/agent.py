@@ -3,25 +3,17 @@ from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset, StdioServerParamet
 
 from . import prompt
 from ...config import MODEL
+from .tools import fetch_stock_financial_indicators, get_current_time
+
 
 fundamental_agent = LlmAgent(
     model=MODEL,
     name="fundamental_agent",
-    description="fundamental_agent for conducting fundamental analysis using financial statements",
+    description="fundamental_agent for conducting fundamental analysis using financial statements and output a structured Markdown report.",
     instruction=prompt.FUNDAMENTAL_AGENT_PROMPT,
     output_key="fundamental_analysis_output",
     tools=[
-        MCPToolset(
-            connection_params=StdioServerParameters(
-                    command="uv",
-                    args=[
-                        "--directory",
-                        "/home/tic19/PyProjects/equity-research-agent/yahoo-finance-mcp",
-                        "run",
-                        "server.py"
-                    ]
-            ),
-            tool_filter=['get_financial_statement']
-        ),
+        fetch_stock_financial_indicators,
+        get_current_time
     ]
 )
