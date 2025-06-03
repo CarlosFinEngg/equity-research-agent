@@ -8,6 +8,9 @@ dependencies = [
     "akshare>=1.16.96",
     "google-adk>=1.1.0",
     "ipykernel>=6.29.5",
+    "litellm>=1.72.0",
     "mcp-query-table>=0.3.8",
     "mcp[cli]>=1.9.1",
+    "pandoc>=2.4",
+    "pypandoc>=1.15",
 ]

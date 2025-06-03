@@ -23,6 +23,9 @@ wheels/
 *.log
 *.tmp
 *test*
+reports/*
+!reports/
+*.md
 
 # Project-specific
 yahoo-finance-mcp/

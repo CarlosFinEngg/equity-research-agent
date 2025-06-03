@@ -1,6 +1,5 @@
 import akshare as ak
 from typing import Dict
-from datetime import datetime
 
 def fetch_stock_financial_indicators(symbol: str, start_year: str) -> Dict:
     """
@@ -57,20 +56,3 @@ def fetch_stock_financial_indicators(symbol: str, start_year: str) -> Dict:
         return {'status': 'error', 'message': str(e)}
     
 
-
-
-def get_current_time() -> dict:
-    """Returns the current date and time.
-
-    Args:
-        None
-
-    Returns:
-        dict: status and result.
-    """
-
-    now = datetime.now()
-    report = (
-        f'The current time is {now.strftime("%Y-%m-%d %H:%M:%S %Z%z")}'
-    )
-    return {"status": "success", "report": report}

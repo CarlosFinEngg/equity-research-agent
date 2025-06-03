@@ -1,11 +1,24 @@
 from google.adk.agents import LlmAgent
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset, StdioServerParameters
-from google.adk.tools import google_search
+from google.adk.tools.agent_tool import AgentTool
+from google.adk.models.lite_llm import LiteLlm
+
 from dotenv import load_dotenv
 import os
 
+from ...callbacks import save_agent_output
 from . import prompt
-from ...config import MODEL
+from ...config import *
+from ...tools import get_current_time
+from ...tools import google_search_agent
+
+
+if MODEL in GEMINI_LIST:
+    model_in_use = MODEL
+else:
+    model_in_use = LiteLlm(model=MODEL)
+
+
 
 
 # Load environment variables from .env file
@@ -16,11 +29,11 @@ smithery_api_key = os.getenv("SMITHERY_API_KEY")
 
 
 policy_agent = LlmAgent(
-    model=MODEL,
+    model=model_in_use,
     name="policy_agent",
-    description="policy_agent for conducting policy and regulatory analysis using government announcements, regulatory policies, industry guidelines, and legislative data and output a structured Markdown report.",
+    description="policy_agent for conducting policy and regulatory analysis using government announcements, regulatory policies, industry guidelines, and legislative data and output a structured Markdown report in Chinese.",
     instruction=prompt.POLICY_AGENT_PROMPT,
-    output_key="policy_analysis_output",
+    output_key="policy_agent_output",
     tools=[
         MCPToolset(
             connection_params=StdioServerParameters(
@@ -35,6 +48,8 @@ policy_agent = LlmAgent(
                 ]
             )
         ),
-        google_search
-    ]
+        AgentTool(agent=google_search_agent),
+        get_current_time
+    ],
+    after_agent_callback=save_agent_output
 )
