@@ -76,12 +76,16 @@ Then run the agent in ADK WEB:
 ```bash
 adk web
 ```
+or run in Terminal:
+```bash
+adk run stock_analysis_agent
+```
 
 The analysis report will be generated in both Markdown format and your chosen output format (PDF/HTML). The reports can be found in the `reports` directory with the following naming convention:
 ```
 reports/
     equity_research_report_<company_name>_<ticker>_<YYYYMMDD>.md
-    equity_research_report_<company_name>_<ticker>_<YYYYMMDD>.pdf  # or .html
+    equity_research_report_<company_name>_<ticker>_<YYYYMMDD>.html  # or .pdf
 ```
 
 
