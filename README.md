@@ -112,7 +112,7 @@ Lastly, configure the parameters of `StdioServerParameters()` in agents accordin
 
 ## Usage
 
-Configure models in `stock_analysis_agent/config.py` and environment variables (e.g. LLM API key) in `stock_analysis_agent/.env` as needed, for example:
+1. Add a `.env` file in `stock_analysis_agent/` and configure environment variables (e.g. LLM and MCP host platform API key) in  as needed, for example:
 
 ```bash
 GOOGLE_GENAI_USE_VERTEXAI=FALSE
@@ -121,14 +121,21 @@ OPENAI_API_KEY=...
 SMITHERY_API_KEY=...
 ```
 
-Then run the agent in ADK WEB:
-```bash
-adk web
-```
+2. Configure LLM models in `stock_analysis_agent/config.py`
+
+3. Activate venv
+  ```bash
+  source .venv/bin/activate
+  ```
+
+4. Then run the agent in ADK WEB:
+  ```bash
+  adk web
+  ```
 or run in Terminal:
-```bash
-adk run stock_analysis_agent
-```
+  ```bash
+  adk run stock_analysis_agent
+  ```
 
 The analysis report will be generated in both Markdown format and your chosen output format (PDF/HTML). The reports can be found in the `reports` directory with the following naming convention:
 ```
