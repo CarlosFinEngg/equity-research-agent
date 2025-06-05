@@ -5,6 +5,13 @@ from google.adk.agents import LlmAgent
 from google.adk.models.lite_llm import LiteLlm
 from google.adk.tools import google_search
 
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+import time
+import schedule
+
 from .config import *
 
 
@@ -38,14 +45,14 @@ google_search_agent = LlmAgent(
 
 
 
-def combine_reports(provided_ticker: str, company_name: str, output_format: str = 'pdf') -> dict:
+def combine_reports(provided_ticker: str, company_name: str, output_format: str = 'html') -> dict:
     """
     Combines Markdown files from a hard-coded 'reports' folder into a single report.
     
     Args:
         provided_ticker (str): Stock ticker symbol, must be a string.
         company_name (str): Name of the company, must be a string.
-        output_format (str, optional): Output format, either 'pdf' or 'html'. Defaults to 'pdf'.
+        output_format (str, optional): Output format, either 'pdf' or 'html'. Defaults to 'html'.
     
     Returns:
         dict: A dictionary containing status information with the following structure:
@@ -91,8 +98,9 @@ def combine_reports(provided_ticker: str, company_name: str, output_format: str 
             """
         # Combine Markdown files
         with open(combined_md_path, 'w', encoding='utf-8') as outfile:
-            # Write YAML front matter first
-            outfile.write(yaml_front_matter)
+            if output_format == 'pdf':
+                # Write YAML front matter first
+                outfile.write(yaml_front_matter)
             
             # Write content from each category
             for category in categories:
@@ -121,7 +129,8 @@ def combine_reports(provided_ticker: str, company_name: str, output_format: str 
         return {
             "status": "success",
             "output_report_name": output_basename,
-            "output_format": output_format.upper()
+            "output_format": output_format.upper(),
+            "report_path": output_file
         }
 
     except Exception as e:
@@ -132,5 +141,86 @@ def combine_reports(provided_ticker: str, company_name: str, output_format: str 
 
 
 
+
+def email_report(report_path: str, recipient_email: str) -> dict:
+    """
+    Placeholder function to email the report.
+    
+    Args:
+        report_name (str): Name of the report to be emailed.
+        recipient_email (str): Email address of the recipient.
+    
+    Returns:
+        dict: A dictionary containing status information.
+    """
+    
+    
+    # 1. 读取本地 HTML 文件
+    html_file_path = f"{report_path}"
+    report_name = os.path.basename(report_path)
+    with open(html_file_path, 'r', encoding='utf-8') as f:
+        html_content = f.read()
+
+    # 2. 构造邮件内容
+    msg = MIMEMultipart('alternative')
+    msg['Subject'] = f'{report_name}'         # 邮件主题
+    msg['From'] = 'sender@example.com'    # 发件人地址
+    msg['To'] = recipient_email   # 收件人地址，可以用逗号分隔多个
+
+    # 将 HTML 内容封装为 MIMEText，指定 subtype='html'
+    html_part = MIMEText(html_content, 'html', 'utf-8')
+    msg.attach(html_part)
+
+    # 3. 通过 SMTP 发送邮件
+    smtp_server = 'smtp.example.com'  # SMTP 服务器地址，例如 smtp.gmail.com
+    smtp_port = 587                   # SMTP 端口（若使用 STARTTLS，一般是 587；SSL/TLS 一般是 465）
+    smtp_user = 'sender@example.com'  # SMTP 登录用户名（通常就是发件人邮箱地址）
+    smtp_password = 'your_password'   # SMTP 登录密码（注意有的邮箱需要开“SMTP/IMAP 服务”并用授权码）
+
+    server = None
+    try:
+        # 建立到 SMTP 服务器的连接（这里以 STARTTLS 模式为例）
+        server = smtplib.SMTP(smtp_server, smtp_port)
+        server.ehlo()
+        server.starttls()
+        server.login(smtp_user, smtp_password)
+        server.sendmail(msg['From'], msg['To'].split(','), msg.as_string())
+        print("邮件发送成功！")
+    except Exception as e:
+        print("发送邮件时发生异常：", e)
+    finally:
+        if server:
+            server.quit()
+
+
+    return {
+        "status": "success",
+        "message": f"Report {report_name} has been emailed to {recipient_email}."
+    }
+
+
+
+def schedule_email_report(report_path: str, recipient_email: str, schedule_time: str) -> dict:
+    """
+    Schedules an email to be sent at a specific time.
+    
+    Args:
+        report_path (str): Path to the report file to be emailed.
+        recipient_email (str): Email address of the recipient.
+        schedule_time (str): Time to send the email in HH:MM format.
+    
+    Returns:
+        dict: A dictionary containing status information.
+    """
+    
+    def job():
+        email_report(report_path, recipient_email)
+    
+    # Schedule the job
+    schedule.every().day.at(schedule_time).do(job)
+    
+    while True:
+        schedule.run_pending()
+        time.sleep(1)  # Sleep for a short time to avoid busy-waiting
 
 

@@ -4,7 +4,7 @@ import akshare as ak
 
 
 
-def calculate_technical_indicators(symbol: str) -> dict[str, dict]:
+def calculate_technical_indicators(provided_ticker: str) -> dict[str, dict] | dict[str, str]:
     """
     Fetch historical daily data for the specified stock from six months before today up to today,
     where "today" is determined in the China (Asia/Shanghai) timezone, then calculate the following:
@@ -33,7 +33,7 @@ def calculate_technical_indicators(symbol: str) -> dict[str, dict]:
          - 量价齐跌天数 (%): 累计连续量价齐跌天数、期间累计涨跌幅（百分比）、期间累计换手率（%）
 
     Parameters:
-      symbol (str): Stock code, e.g., "000001"
+      provided_ticker (str): Stock code, e.g., "600519"
 
     Returns (dict[str, dict]):
         A nested dictionary where:
@@ -72,7 +72,7 @@ def calculate_technical_indicators(symbol: str) -> dict[str, dict]:
 
         # 1. 拉取历史日线数据 (固定前复权)
         df = ak.stock_zh_a_hist(
-            symbol=symbol,
+            symbol=provided_ticker,
             period="daily",
             start_date=start_date,
             end_date=end_date,
@@ -82,7 +82,7 @@ def calculate_technical_indicators(symbol: str) -> dict[str, dict]:
         if df is None or df.empty:
             return {
                 "status": "error",
-                "error_message": f"未能获取 {symbol} 在 {start_date} 到 {end_date} 之间的历史数据。"
+                "error_message": f"未能获取 {provided_ticker} 在 {start_date} 到 {end_date} 之间的历史数据。"
             }
 
         df = df.sort_values("日期").reset_index(drop=True)

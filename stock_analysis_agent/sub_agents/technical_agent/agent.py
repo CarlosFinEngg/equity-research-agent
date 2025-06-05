@@ -1,9 +1,9 @@
 from google.adk.agents import LlmAgent
 from google.adk.tools.mcp_tool.mcp_toolset import MCPToolset, StdioServerParameters
 from google.adk.models.lite_llm import LiteLlm
-from ...callbacks import save_agent_output
 
 
+from ...callbacks import *
 from . import prompt
 from ...config import *
 from .tools import calculate_technical_indicators
@@ -24,5 +24,6 @@ technical_agent = LlmAgent(
     output_key="technical_agent_output",
     tools=[calculate_technical_indicators,
            get_current_time],
+    before_agent_callback=call_log,
     after_agent_callback=save_agent_output
 )

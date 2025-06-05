@@ -5,7 +5,7 @@ from google.adk.models.lite_llm import LiteLlm
 from . import prompt
 from ...config import *
 from .tools import fetch_stock_financial_indicators
-from ...callbacks import save_agent_output
+from ...callbacks import *
 from ...tools import get_current_time
 
 
@@ -25,5 +25,6 @@ fundamental_agent = LlmAgent(
         fetch_stock_financial_indicators,
         get_current_time
     ],
+    before_agent_callback=call_log,
     after_agent_callback=save_agent_output
 )

@@ -18,3 +18,14 @@ def save_agent_output(callback_context: CallbackContext) -> None:
 
 
     return None # Allow the model call to proceed
+
+
+def call_log(callback_context: CallbackContext) -> None:
+
+    agent_name = callback_context.agent_name
+    state = callback_context.state
+
+    print(f"[Callback] {agent_name} called with state: {state}")
+
+
+    return None

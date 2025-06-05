@@ -58,7 +58,7 @@ sudo apt install texlive-xetex fonts-noto-cjk
 ```
 
 Please note: For the setup of MCP servers, please refer to the following:
-
+  - [sequential-thinking](https://smithery.ai/server/@smithery-ai/server-sequential-thinking)
 
 MCPs are supposed to be cloned to this project's root folder.
 

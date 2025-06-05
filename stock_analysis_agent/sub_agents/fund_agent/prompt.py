@@ -160,75 +160,76 @@ Mandatory Process - Synthesis & Analysis:
      4. “沪股通持仓市值连续三个交易日增加，合计流入资金 3 亿元。”
    - Provide actionable commentary on risk/reward based on fund flow structure.
 
-Expected Text Output Structure:
+Expected Text Output Structure (Convert to Chinese and Markdown format):
 
 ```markdown
-# Fund Flow Analysis Report: {provided_ticker}
+# 资金流向分析报告：<provided_ticker>
 
-## Basic Information
-- Ticker: {provided_ticker}
-- Market: {sh/sz/bj}
-- Analysis Date: {YYYY-MM-DD}
-- Timeframe: {timeframe}
-- Institutional Quarters: {quarters_list}
-- HSGT Date Range: {start_date} to {end_date}
+## 基本信息
+- 代码：<provided_ticker>
+- 市场：<sh/sz/bj>
+- 分析日期：<YYYY-MM-DD>
+- 时间范围：<timeframe>
+- 机构季度：<quarters_list>
+- 沪深港通时间范围：<start_date> 至 <end_date>
 
-## 1. Tiered Fund Flow Analysis (Last {timeframe})
-### 1.1 Net Flow Statistics
-- Super-Large Orders Net Inflow (Amount & %)
-- Large Orders Net Inflow (Amount & %)
-- Medium Orders Net Inflow (Amount & %)
-- Small Orders Net Inflow (Amount & %)
-- Main Force Net Inflow (Amount & %)
-- Cumulative Net Inflows by Category
+## 1. 分层资金流分析（过去 <timeframe>）
+### 1.1 净流入统计
+- 特大单净流入（金额 & 百分比）
+- 大单净流入（金额 & 百分比）
+- 中单净流入（金额 & 百分比）
+- 小单净流入（金额 & 百分比）
+- 主力净流入（金额 & 百分比）
+- 按类别累计净流入
 
-### 1.2 Flow Trend Analysis
-- Super-Large Order Acceleration Periods
-- Main Force vs Retail Flow Comparison
-- Key Flow Structure Insights
+### 1.2 流向趋势分析
+- 特大单加速期
+- 主力与散户流向对比
+- 关键流向结构洞察
 
-## 2. Chip Distribution Analysis (Last 90 Trading Days)
-### 2.1 Cost Distribution Metrics
-- Daily Average Cost Evolution
-- Daily Profit Ratio Changes
-- 90% Cost Bands and Concentration
-- Latest Price vs Average Cost Analysis
+## 2. 筋位分布分析（过去 90 个交易日）
+### 2.1 成本分布指标
+- 日均成本演变
+- 日度盈亏比变化
+- 90% 成本带及集中度
+- 最新价格 vs 平均成本分析
 
-### 2.2 Position Analysis
-- Price Breakouts vs 90% Cost Bands
-- Cost Distribution Pattern Shifts
-- Position Accumulation Assessment
+### 2.2 持仓分析
+- 价格突破 vs 90% 成本带
+- 成本分布格局变化
+- 持仓累积评估
 
-## 3. Institutional Holdings Analysis
-### 3.1 Holdings Detail
-- Top 5 Institutions & Holdings %
-- QoQ Holdings Changes
+## 3. 机构持仓分析
+### 3.1 持仓明细
+- 前五大机构及持仓占比
+- 环比持仓变化
 
-### 3.2 Institutional Behavior
-- Major Position Changes
-- Holdings Concentration
-- Institutional Sentiment Assessment
+### 3.2 机构行为
+- 主要持仓变动
+- 持仓集中度
+- 机构情绪评估
 
-## 4. HSGT Flow Analysis
-### 4.1 Holdings Statistics
-- Daily Market Value
-- Value Changes (1D/5D/10D)
-- A-Share Holding % Trends
+## 4. 沪深港通资金流向分析
+### 4.1 持仓统计
+- 日度市值
+- 价值变化（1 日/5 日/10 日）
+- A 股持股比例趋势
 
-### 4.2 Flow Pattern Analysis
-- Significant Flow Events
-- Price Correlation Analysis
-- Northbound Capital Sentiment
+### 4.2 流向模式分析
+- 重要资金流事件
+- 价格关联分析
+- 北向资金情绪
 
-## 5. Conclusions and Investment Recommendations
-### 5.1 Multi-Dimensional Assessment
-- Fund Flow Overview
-- Institutional Position Impact
-- Northbound Participation Level
+## 5. 结论与投资建议
+### 5.1 多维度评估
+- 资金流概览
+- 机构持仓影响
+- 北向参与度
 
-### 5.2 Investment Strategy
-- Risk/Reward Assessment
-- Trading Recommendations
+### 5.2 投资策略
+- 风险/收益评估
+- 交易建议
+
 ```
 
 """

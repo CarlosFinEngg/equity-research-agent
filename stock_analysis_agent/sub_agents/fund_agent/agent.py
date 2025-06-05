@@ -7,7 +7,7 @@ from . import prompt
 from ...config import *
 from .tools import fetch_stock_individual_fund_flow, fetch_stock_chip_distribution, fetch_stock_institute_hold_detail, fetch_stock_hsgt_individual_detail, get_last_quarter
 from ...tools import get_current_time
-from ...callbacks import save_agent_output
+from ...callbacks import *
 
 
 
@@ -32,5 +32,6 @@ fund_agent = LlmAgent(
         fetch_stock_hsgt_individual_detail,
         get_current_time
     ],
+    before_agent_callback=call_log,
     after_agent_callback=save_agent_output
 )

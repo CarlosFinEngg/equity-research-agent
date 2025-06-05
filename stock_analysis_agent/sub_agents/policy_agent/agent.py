@@ -6,7 +6,7 @@ from google.adk.models.lite_llm import LiteLlm
 from dotenv import load_dotenv
 import os
 
-from ...callbacks import save_agent_output
+from ...callbacks import *
 from . import prompt
 from ...config import *
 from ...tools import get_current_time
@@ -35,21 +35,22 @@ policy_agent = LlmAgent(
     instruction=prompt.POLICY_AGENT_PROMPT,
     output_key="policy_agent_output",
     tools=[
-        MCPToolset(
-            connection_params=StdioServerParameters(
-                command='npx',
-                args=[
-                    "-y",
-                    "@smithery/cli@latest",
-                    "run",
-                    "@smithery-ai/server-sequential-thinking",
-                    "--key",
-                    f"{smithery_api_key}"
-                ]
-            )
-        ),
+        # MCPToolset(
+        #     connection_params=StdioServerParameters(
+        #         command='npx',
+        #         args=[
+        #             "-y",
+        #             "@smithery/cli@latest",
+        #             "run",
+        #             "@smithery-ai/server-sequential-thinking",
+        #             "--key",
+        #             f"{smithery_api_key}"
+        #         ]
+        #     )
+        # ),
         AgentTool(agent=google_search_agent),
         get_current_time
     ],
+    before_agent_callback=call_log,
     after_agent_callback=save_agent_output
 )
