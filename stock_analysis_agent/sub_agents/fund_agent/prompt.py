@@ -162,7 +162,7 @@ Mandatory Process - Synthesis & Analysis:
 
 Expected Text Output Structure (Convert to Chinese and Markdown format):
 
-```markdown
+
 # 资金流向分析报告：<provided_ticker>
 
 ## 基本信息
@@ -230,6 +230,6 @@ Expected Text Output Structure (Convert to Chinese and Markdown format):
 - 风险/收益评估
 - 交易建议
 
-```
+
 
 """

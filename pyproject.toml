@@ -13,5 +13,6 @@ dependencies = [
     "mcp[cli]>=1.9.1",
     "pandoc>=2.4",
     "pypandoc>=1.15",
+    "schedule>=1.2.2",
     "weasyprint>=65.1",
 ]
