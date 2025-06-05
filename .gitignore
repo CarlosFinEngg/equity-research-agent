@@ -37,5 +37,5 @@ stock_analysis_agent/prompt_testing.py
 stock_analysis_agent/sub_agents/fundamental_agent/agent_gr.py
 stock_analysis_agent/sub_agents/fundamental_agent/prompt_gr.py
 stock_analysis_agent/sub_agents/fundamental_agent/start_mcp_server.ps1
-stock_analysis_agent/get_available_models.py
+get_available_models.py
 stock_analysis_agent/old_root_agent.py
