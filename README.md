@@ -6,7 +6,7 @@ A multi-agent Python system for comprehensive stock analysis and equity research
 
 **equity-research-agent** leverages multiple specialized sub-agents to perform:
 - Fundamental analysis (financial statements, ratios, trends)
-- Technical analysis (price data, indicators, chart patterns)
+- Technical analysis (price data, indicators)
 - Fund flow analysis (capital inflow/outflow, liquidity)
 - Policy analysis (government/regulatory news)
 
