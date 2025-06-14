@@ -1,4 +1,4 @@
-from google.adk.agents import LlmAgent, SequentialAgent, ParallelAgent
+from google.adk.agents import LlmAgent, ParallelAgent
 from google.adk.tools.agent_tool import AgentTool
 from google.adk.models.lite_llm import LiteLlm
 
@@ -19,7 +19,7 @@ else:
     model_in_use = LiteLlm(model=MODEL)
 
 
-analysis_agent = SequentialAgent(
+analysis_agent = ParallelAgent(
     name="equity_research_pipeline",
     description=(
         "Agent to analyse a stock from fundamental, technical, fund flow, and political perspectives and report findings into a structured detailed Markdown report in Chinese."

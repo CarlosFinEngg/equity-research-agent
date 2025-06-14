@@ -10,7 +10,7 @@ from ...callbacks import *
 from . import prompt
 from ...config import *
 from ...tools import get_current_time
-from ...tools import google_search_agent
+from .tools import google_search_agent_for_policy
 
 
 if MODEL in GEMINI_LIST:
@@ -48,7 +48,7 @@ policy_agent = LlmAgent(
         #         ]
         #     )
         # ),
-        AgentTool(agent=google_search_agent),
+        AgentTool(agent=google_search_agent_for_policy),
         get_current_time
     ],
     before_agent_callback=call_log,

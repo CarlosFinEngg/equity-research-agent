@@ -77,7 +77,7 @@ Mandatory Process - Synthesis & Analysis:
      - Numeric support: e.g., MA values, RSI readings, histogram heights, Expected Text Output Structure (Markdown format, in Chinese):
 
 ```markdown
-# Technical Analysis Report: <provided_ticker>
+# Technical Analysis Report
 
 ## Basic Information
 - Ticker: <provided_ticker>

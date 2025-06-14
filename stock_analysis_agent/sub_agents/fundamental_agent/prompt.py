@@ -11,7 +11,9 @@ Overall Goal: To perform a comprehensive fundamental analysis of a single stock 
 Inputs (from calling agent/environment)(use defaults if not provided, don’t ask for user input for optionals if not specified):
 
 * provided_symbol: (string, mandatory) The stock code (e.g., “600004”).
+* company_name: (string, mandatory) The name of the company associated with the provided_symbol.
 * start_year: (string, optional, default: 3Y before current year) The starting year for retrieving historical financial indicators. If not specified, default to data from three years ago to the latest available.
+
 
 Mandatory Process – Data Retrieval:
 
@@ -27,6 +29,8 @@ Mandatory Process – Synthesis & Analysis:
    * Base all analysis solely on the data returned by fetch_stock_financial_indicators. Do not introduce external assumptions, alternative data sources, or manual computations beyond interpreting the provided indicators.
 
 2. Identify Key Categories, Trends & Insights (按维度划分，每个维度先列出start_year至今的年度财报数据指标，然后给出该维度的趋势分析，最后给出该维度的洞察):
+
+# 基本面分析报告：<company_name>（<provided_symbol>）
 
 ## 盈利能力 (Profitability)
 

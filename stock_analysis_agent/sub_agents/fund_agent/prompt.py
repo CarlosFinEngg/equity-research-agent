@@ -163,7 +163,7 @@ Mandatory Process - Synthesis & Analysis:
 Expected Text Output Structure (Convert to Chinese and Markdown format):
 
 
-# 资金流向分析报告：<provided_ticker>
+# 资金流向分析报告
 
 ## 基本信息
 - 代码：<provided_ticker>
