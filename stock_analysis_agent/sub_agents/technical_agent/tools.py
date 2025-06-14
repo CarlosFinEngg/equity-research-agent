@@ -14,23 +14,23 @@ def calculate_technical_indicators(provided_ticker: str) -> dict[str, dict] | di
       4. Bollinger Bands: 20-day moving average ± 2 × standard deviation
       5. KDJ: 9-day RSV, with initial values for K and D set to 50 (starting once RSV is available)
       6. Volume Amplification: current volume divided by 20-day average volume
-      7. Technical events with refined Chinese text descriptions:
-         - 创月新高 / 创月新低: 当日收盘价为近 20 个交易日内最高/最低
-         - 半年新高 / 半年新低: 当日收盘价为近 126 个交易日内最高/最低
-         - 一年新高 / 一年新低: 当日收盘价为近 252 个交易日内最高/最低
-         - 历史新高 / 历史新低: 当日收盘价为历史以来最高/最低
-         - 连续上涨天数 (%): 累计连续上涨天数与累计涨跌幅（百分比）
-         - 连续下跌天数 (%): 累计连续下跌天数与累计涨跌幅（百分比）
-         - 持续放量天数: 累计连续放量天数
-         - 持续缩量天数: 累计连续缩量天数
-         - 向上突破:
-             * 5日均线, 10日均线, 20日均线, 30日均线, 60日均线, 120日均线, 250日均线
-             * 布林带上轨
-         - 向下突破:
-             * 5日均线, 10日均线, 20日均线, 30日均线, 60日均线, 120日均线, 250日均线
-             * 布林带下轨
-         - 量价齐升天数 (%): 累计连续量价齐升天数、期间累计涨跌幅（百分比）、期间累计换手率（%）
-         - 量价齐跌天数 (%): 累计连续量价齐跌天数、期间累计涨跌幅（百分比）、期间累计换手率（%）
+      7. Technical events:
+         - Monthly High/Low: Closing price is highest/lowest in last 20 trading days
+         - 6-Month High/Low: Closing price is highest/lowest in last 126 trading days
+         - Yearly High/Low: Closing price is highest/lowest in last 252 trading days 
+         - All-Time High/Low: Closing price is highest/lowest historically
+         - Consecutive Up Days (%): Number of consecutive up days and cumulative percentage gain
+         - Consecutive Down Days (%): Number of consecutive down days and cumulative percentage loss
+         - Consecutive Volume Up Days: Number of consecutive days with increasing volume
+         - Consecutive Volume Down Days: Number of consecutive days with decreasing volume
+         - Breakout Above:
+             * 5-day, 10-day, 20-day, 30-day, 60-day, 120-day, 250-day moving averages
+             * Upper Bollinger Band
+         - Breakdown Below:
+             * 5-day, 10-day, 20-day, 30-day, 60-day, 120-day, 250-day moving averages 
+             * Lower Bollinger Band
+         - Price-Volume Up Days (%): Days with both price & volume up, cumulative gain %, turnover %
+         - Price-Volume Down Days (%): Days with both price & volume down, cumulative loss %, turnover %
 
     Parameters:
       provided_ticker (str): Stock code, e.g., "600519"
@@ -42,8 +42,8 @@ def calculate_technical_indicators(provided_ticker: str) -> dict[str, dict] | di
         Example:
         {
             "2022-01-03": {
-                "开盘": 12.34,
-                "收盘": 12.56,
+                "open": 12.34,
+                "close": 12.56,
                 // ...other indicators...
             },
             "2022-01-04": {
@@ -57,7 +57,6 @@ def calculate_technical_indicators(provided_ticker: str) -> dict[str, dict] | di
       - start_date is computed as six months before end_date.
       - Use ak.stock_zh_a_hist with adjust="qfq" to fetch daily data from start_date to end_date (inclusive).
       - Technical events are derived solely from columns in the fetched DataFrame.
-      - Refined text descriptions replace previous simple flags.
       - If fetching fails, return status="error" with error_message.
       - On success, return status="success" and convert the DataFrame to a list of dicts.
     """

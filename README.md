@@ -44,7 +44,6 @@ mcp/
   - [google-adk](https://pypi.org/project/google-adk/)
   - [mcp-query-table](https://pypi.org/project/mcp-query-table/)
   - [mcp](https://pypi.org/project/mcp/)
-  - [pypandoc](https://pypi.org/project/pypandoc/) for PDF/HTML report generation
 
 
 ## Setup on Linux
@@ -77,24 +76,7 @@ iv. **Activate the virtual environment**
 source .venv/bin/activate
 ```
 
-### 2. PDF Converter Setup
-
-For PDF report generation with Chinese support, additional dependencies are required:
-
-1. Install Pandoc using Python:
-```python
-import pypandoc
-
-pypandoc.download_pandoc()
-```
-
-1. Install XeTeX and Noto CJK fonts on Linux:
-```bash
-sudo apt update
-sudo apt install texlive-xetex fonts-noto-cjk
-```
-
-### 3. MCP Configuration
+### 2. MCP Configuration
 
 For the setup of MCP servers, please refer to the following:
   - [sequential-thinking](https://smithery.ai/server/@smithery-ai/server-sequential-thinking)

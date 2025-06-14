@@ -1,8 +1,8 @@
 import os
-import pypandoc
+import markdown
+from weasyprint import HTML, CSS
 from datetime import datetime
 from google.adk.agents import LlmAgent
-from google.adk.models.lite_llm import LiteLlm
 from google.adk.tools import google_search
 
 import smtplib
@@ -22,7 +22,6 @@ def get_current_time() -> dict:
     """Returns the current date and time.
 
     Args:
-        None
 
     Returns:
         dict: current date and time.
@@ -48,12 +47,12 @@ google_search_agent = LlmAgent(
 def combine_reports(provided_ticker: str, company_name: str, output_format: str = 'html') -> dict:
     """
     Combines Markdown files from a hard-coded 'reports' folder into a single report.
-    
+
     Args:
         provided_ticker (str): Stock ticker symbol, must be a string.
         company_name (str): Name of the company, must be a string.
         output_format (str, optional): Output format, either 'pdf' or 'html'. Defaults to 'html'.
-    
+
     Returns:
         dict: A dictionary containing status information with the following structure:
             On success: {"status": "success", "output_report_name": str, "output_format": str}
@@ -68,7 +67,7 @@ def combine_reports(provided_ticker: str, company_name: str, output_format: str 
         return {"status": "error", "error_message": "provided_ticker must be a string"}
     if not isinstance(company_name, str):
         return {"status": "error", "error_message": "company_name must be a string"}
-    
+
     # Construct output basename with underscores
     output_basename = f"equity_research_report_{company_name}_{provided_ticker}_{date_str}"
     combined_md_path = os.path.join(input_folder, f"{output_basename}.md")
@@ -76,32 +75,13 @@ def combine_reports(provided_ticker: str, company_name: str, output_format: str 
     try:
         # Define the expected order of files
         categories = ['fundamental', 'technical', 'fund', 'policy']
-        
+
         # Ensure reports directory exists
         os.makedirs(input_folder, exist_ok=True)
-        
-        # Create YAML front matter
-        yaml_front_matter = f"""
-            ---
-            title: "{company_name}（{provided_ticker}）基本面分析报告"
-            author: "Equity Research Agent Created by Carlos Yaran Zhou"
-            date: "{datetime.now().strftime('%Y-%m-%d')}"
-            fontsize: 12pt
-            lang: zh-CN
-            mainfont: Noto Serif CJK SC
-            monofont: Noto Sans Mono CJK SC
-            output:
-            pdf_document:
-                latex_engine: xelatex
-            ---
 
-            """
         # Combine Markdown files
         with open(combined_md_path, 'w', encoding='utf-8') as outfile:
-            if output_format == 'pdf':
-                # Write YAML front matter first
-                outfile.write(yaml_front_matter)
-            
+
             # Write content from each category
             for category in categories:
                 filename = f"{category}_agent_report.md"
@@ -115,22 +95,94 @@ def combine_reports(provided_ticker: str, company_name: str, output_format: str 
                     print(f"Warning: {filename} not found in {input_folder}. Skipping...")
 
         # Normalize output_format
-        output_format = output_format.lower()
-        if output_format not in ['pdf', 'html']:
-            output_format = 'pdf'  # Default to PDF if invalid format specified
+        # 读取 Markdown 文件
+        with open(combined_md_path, "r", encoding="utf-8") as f:
+            md_text = f.read()
 
-        output_file = os.path.join(input_folder, f"{output_basename}.{output_format}")
-        # Convert to desired format
-        if output_format == 'pdf':
-            pypandoc.convert_file(combined_md_path, 'pdf', outputfile=output_file, extra_args=["--pdf-engine=xelatex"])
-        else:
-            pypandoc.convert_file(combined_md_path, 'html', outputfile=output_file)
+        # 转换为 HTML
+        html_content = markdown.markdown(md_text, extensions=["tables"])
+
+        html_full = f"""
+        <!DOCTYPE html>
+        <html lang="zh">
+        <head>
+            <meta charset="UTF-8">
+            <title>导出文档</title>
+            <style>
+                body {{
+                    font-family: "Arial", sans-serif;
+                    font-size: 12pt;
+                    line-height: 1.6;
+                    padding: 2em;
+                }}
+                table {{
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 1em 0;
+                }}
+                th, td {{
+                    border: 1px solid #333;
+                    padding: 6px 10px;
+                    text-align: center;
+                }}
+                th {{
+                    background-color: #f2f2f2;
+                }}
+            </style>
+        </head>
+        <body>
+        {html_content}
+        </body>
+        </html>
+        """
+
+        # 写入 HTML 文件
+        output_file_html = os.path.join(input_folder, f"{output_basename}.html")
+
+        with open(output_file_html, "w", encoding="utf-8") as f:
+            f.write(html_full)
+
+
+        # 自定义页面样式
+        css = CSS(string='''
+            @page {
+                size: A4;
+                margin: 2cm;
+            }
+            body {
+                font-family: "Arial", sans-serif;
+                font-size: 12pt;
+                line-height: 1.6;
+            }
+            h1, h2, h3 {
+                color: #2e6c80;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 1em 0;
+            }
+            th, td {
+                border: 1px solid #333;
+                padding: 6px 10px;
+                text-align: center;
+            }
+            th {
+                background-color: #f2f2f2;
+            }
+        ''')
+
+        output_file_pdf = os.path.join(input_folder, f"{output_basename}.pdf")
+
+        HTML(string=html_content).write_pdf(output_file_pdf, stylesheets=[css])
+
+
 
         return {
             "status": "success",
             "output_report_name": output_basename,
             "output_format": output_format.upper(),
-            "report_path": output_file
+            "report_path": output_file_pdf
         }
 
     except Exception as e:
@@ -147,7 +199,7 @@ def email_report(report_path: str, recipient_email: str) -> dict:
     Placeholder function to email the report.
     
     Args:
-        report_name (str): Name of the report to be emailed.
+        report_path (str): Path of the report to be emailed.
         recipient_email (str): Email address of the recipient.
     
     Returns:
