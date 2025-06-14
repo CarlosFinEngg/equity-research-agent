@@ -1,5 +1,6 @@
 import os
 import markdown
+from numpy import str_
 from weasyprint import HTML, CSS
 from datetime import datetime
 from google.adk.agents import LlmAgent
@@ -44,18 +45,17 @@ google_search_agent = LlmAgent(
 
 
 
-def combine_reports(provided_ticker: str, company_name: str, output_format: str = 'html') -> dict:
+def combine_reports(provided_ticker: str, company_name: str) -> dict:
     """
     Combines Markdown files from a hard-coded 'reports' folder into a single report.
 
     Args:
         provided_ticker (str): Stock ticker symbol, must be a string.
         company_name (str): Name of the company, must be a string.
-        output_format (str, optional): Output format, either 'pdf' or 'html'. Defaults to 'html'.
 
     Returns:
         dict: A dictionary containing status information with the following structure:
-            On success: {"status": "success", "output_report_name": str, "output_format": str}
+            On success: {"status": "success", "output_report_name": str, "report_path": str}
             On error: {"status": "error", "error_message": str}
     """
     # Hard-coded input folder
@@ -181,7 +181,6 @@ def combine_reports(provided_ticker: str, company_name: str, output_format: str 
         return {
             "status": "success",
             "output_report_name": output_basename,
-            "output_format": output_format.upper(),
             "report_path": output_file_pdf
         }
 
